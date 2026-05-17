@@ -26,4 +26,19 @@ const scripts = defineCollection({
   })
 });
 
-export const collections = { guides, scripts };
+const articles = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/articles' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.string(),
+    audience: z.string(),
+    tags: z.array(z.string()).default([]),
+    author: z.string(),
+    updated: z.coerce.date(),
+    published: z.coerce.date(),
+    featured: z.boolean().default(false)
+  })
+});
+
+export const collections = { guides, scripts, articles };

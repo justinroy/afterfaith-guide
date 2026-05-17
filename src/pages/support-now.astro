@@ -3,24 +3,68 @@ import Layout from '../components/Layout.astro';
 ---
 
 <Layout title="Support Now">
-  <section class="section">
-    <div class="container prose">
-      <p class="eyebrow">Support Now</p>
-      <h1>Start with safety and steadiness.</h1>
-      <p class="notice">AfterFaith Guide is an educational resource, not therapy, medical advice, legal advice, crisis counseling, or clergy counseling. If you are in immediate danger or may harm yourself or someone else, contact local emergency services or a crisis line in your country.</p>
-      <h2>Right now</h2>
-      <ul>
-        <li>Move to a safer place if you can.</li>
-        <li>Contact emergency services if someone may be harmed.</li>
-        <li>Reach out to one steady person who will not pressure you into debate.</li>
-        <li>If religious fear or family conflict is escalating, slow the conversation down.</li>
-      </ul>
-      <h2>When the moment is less urgent</h2>
-      <p>Use the resource directory to find peer support, therapist directories, or tradition-specific support that fits your situation.</p>
-      <div class="button-row">
-        <a class="button" href="/resources?stage=support-now">Browse support resources</a>
+  <section class="page-intro">
+    <div class="container split-intro">
+      <div>
+        <p class="eyebrow">Support Now</p>
+        <h1>Start with safety and steadiness.</h1>
+        <p class="lede">Use this page when fear, grief, conflict, or urgency is making it hard to think clearly.</p>
+      </div>
+      <aside class="intro-panel">
+        <strong>Important limit</strong>
+        <p>AfterFaith Guide is educational. It is not therapy, medical advice, legal advice, crisis counseling, or clergy counseling.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="container support-grid">
+      <div class="notice urgent">If you are in immediate danger or may harm yourself or someone else, contact local emergency services or a crisis line in your country.</div>
+      <div class="support-block">
+        <h2>Right now</h2>
+        <ul>
+          <li>Move to a safer place if you can.</li>
+          <li>Contact emergency services if someone may be harmed.</li>
+          <li>Reach out to one steady person who will not pressure you into debate.</li>
+          <li>If religious fear or family conflict is escalating, slow the conversation down.</li>
+        </ul>
+      </div>
+      <div class="support-block">
+        <h2>When the moment is less urgent</h2>
+        <p>Use the resource directory to find peer support, therapist directories, or tradition-specific support that fits your situation.</p>
+        <div class="button-row">
+          <a class="button" href="/resources?stage=support-now">Browse support resources</a>
+          <a class="button secondary" href="/articles/what-makes-a-resource-safer">How to compare resources</a>
+        </div>
       </div>
     </div>
   </section>
 </Layout>
 
+<style>
+  .support-grid {
+    display: grid;
+    gap: 16px;
+    max-width: 900px;
+  }
+
+  .support-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px;
+  }
+
+  .support-block h2 {
+    margin-bottom: 8px;
+  }
+
+  .support-block p,
+  .support-block li {
+    color: var(--muted);
+  }
+
+  .urgent {
+    font-weight: 750;
+  }
+</style>

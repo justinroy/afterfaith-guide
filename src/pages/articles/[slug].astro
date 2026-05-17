@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import TagPill from '../../components/TagPill.astro';
+
+const articles = await getCollection('articles');
+const article = articles.find((entry) => entry.id.replace(/\.md$/, '') === Astro.params.slug);
+
+if (!article) {
+  return Astro.redirect('/articles', 302);
+}
+
+const { Content } = await render(article);
+const published = new Intl.DateTimeFormat('en', { month: 'long', day: 'numeric', year: 'numeric' }).format(article.data.published);
+const updated = new Intl.DateTimeFormat('en', { month: 'long', day: 'numeric', year: 'numeric' }).format(article.data.updated);
+---
+
+<Layout title={article.data.title} description={article.data.description}>
+  <article class="article-shell">
+    <header class="page-intro">
+      <div class="container article-header">
+        <p class="eyebrow">{article.data.category}</p>
+        <h1>{article.data.title}</h1>
+        <p class="lede">{article.data.description}</p>
+        <div class="article-byline">
+          <span>{article.data.author}</span>
+          <span>Published {published}</span>
+          <span>Updated {updated}</span>
+          <span>{article.data.audience}</span>
+        </div>
+        <div class="tag-row">
+          {article.data.tags.map((tag) => <TagPill label={tag} />)}
+        </div>
+      </div>
+    </header>
+    <div class="container article-layout">
+      <aside class="article-aside">
+        <a href="/articles">All articles</a>
+        <a href={`/articles?category=${encodeURIComponent(article.data.category)}`}>More in {article.data.category}</a>
+      </aside>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Layout>

@@ -8,12 +8,20 @@ const routeId = (id: string) => id.replace(/\.md$/, '');
 ---
 
 <Layout title="Guides">
-  <section class="section">
-    <div class="container prose">
+  <section class="page-intro">
+    <div class="container split-intro">
+      <div>
       <p class="eyebrow">Guides</p>
-      <h1>Practical help for complicated moments.</h1>
-      <p class="lede">Use these guides to slow things down, sort what matters, and find a next step that fits your situation.</p>
+        <h1>Practical help for complicated moments.</h1>
+        <p class="lede">Use these guides to slow things down, sort what matters, and find a next step that fits your situation.</p>
+      </div>
+      <aside class="intro-panel">
+        <strong>Use slowly</strong>
+        <p>These pages are educational support, not therapy, legal advice, crisis care, or pressure to disclose.</p>
+      </aside>
     </div>
+  </section>
+  <section class="section compact">
     <div class="container grid two">
       {guides.map((guide) => (
         <GuideCard title={guide.data.title} description={guide.data.description} stage={guide.data.stage} href={`/guides/${routeId(guide.id)}`} />

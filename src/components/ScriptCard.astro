@@ -19,8 +19,8 @@ const { title, description, href, context } = Astro.props;
   .script-card {
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 6px;
+    padding: 18px;
   }
 
   .meta {
@@ -33,7 +33,7 @@ const { title, description, href, context } = Astro.props;
   }
 
   h2 {
-    font-size: 1.2rem;
+    font-size: 1.08rem;
     line-height: 1.25;
     margin: 0 0 10px;
   }
@@ -43,9 +43,13 @@ const { title, description, href, context } = Astro.props;
     text-decoration: none;
   }
 
+  h2 a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
+  }
+
   p:last-child {
     color: var(--muted);
     margin: 0;
   }
 </style>
-

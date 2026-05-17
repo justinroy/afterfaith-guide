@@ -10,18 +10,21 @@ type Props = {
 const { resource, tags } = Astro.props;
 ---
 
-<article class="resource-card">
+<article class:list={['resource-card', { featured: Boolean(resource.featured) }]}>
   <div class="resource-head">
     <div>
       <p class="type">{resource.type}</p>
       <h2><a href={resource.url} rel="noreferrer" target="_blank">{resource.title}</a></h2>
     </div>
-    {resource.featured ? <span class="featured">Featured</span> : null}
+    {resource.featured ? <span class="featured-label">Featured</span> : null}
   </div>
   <p>{resource.best_for}</p>
+  {resource.not_best_for ? <p class="fit-note"><strong>May not fit:</strong> {resource.not_best_for}</p> : null}
   <dl>
+    <div><dt>Stance</dt><dd>{resource.stance}</dd></div>
     <div><dt>Intensity</dt><dd>{resource.emotional_intensity}</dd></div>
     <div><dt>Cost</dt><dd>{resource.cost}</dd></div>
+    <div><dt>Region</dt><dd>{resource.region}</dd></div>
     <div><dt>Reviewed</dt><dd>{resource.last_reviewed}</dd></div>
   </dl>
   {resource.safety_notes ? <p class="safety">{resource.safety_notes}</p> : null}
@@ -34,8 +37,12 @@ const { resource, tags } = Astro.props;
   .resource-card {
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 6px;
+    padding: 18px;
+  }
+
+  .resource-card.featured {
+    border-left: 4px solid var(--accent);
   }
 
   .resource-head {
@@ -46,7 +53,7 @@ const { resource, tags } = Astro.props;
   }
 
   .type {
-    color: var(--sage);
+    color: var(--accent);
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -55,7 +62,7 @@ const { resource, tags } = Astro.props;
   }
 
   h2 {
-    font-size: 1.35rem;
+    font-size: 1.18rem;
     line-height: 1.25;
     margin: 0;
   }
@@ -65,14 +72,19 @@ const { resource, tags } = Astro.props;
     text-decoration: none;
   }
 
+  h2 a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
+  }
+
   p {
     color: var(--muted);
   }
 
-  .featured {
+  .featured-label {
     background: #e8f0e1;
     border: 1px solid #c9d9bd;
-    border-radius: 999px;
+    border-radius: 4px;
     color: #415032;
     font-size: 0.78rem;
     font-weight: 800;
@@ -83,7 +95,7 @@ const { resource, tags } = Astro.props;
   dl {
     display: grid;
     gap: 10px;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     margin: 18px 0;
   }
 
@@ -99,8 +111,12 @@ const { resource, tags } = Astro.props;
   }
 
   .safety {
-    border-left: 3px solid var(--rose);
+    border-left: 3px solid var(--clay);
     padding-left: 12px;
+  }
+
+  .fit-note {
+    font-size: 0.94rem;
   }
 
   .tags {
@@ -109,4 +125,3 @@ const { resource, tags } = Astro.props;
     gap: 8px;
   }
 </style>
-

@@ -15,10 +15,10 @@ const grouped = {
 };
 ---
 
-<form class="filters" method="get">
+<form class="filters" method="get" role="search">
   {Object.entries(grouped).map(([name, values]) => (
     <label>
-      <span>{name}</span>
+      <span>{name === 'stage' ? 'Situation' : name}</span>
       <select name={name}>
         <option value="">Any</option>
         {values.map((option) => (
@@ -38,10 +38,10 @@ const grouped = {
     align-items: end;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 6px;
     display: grid;
     gap: 14px;
-    margin: 28px 0;
+    margin: 0 0 24px;
     padding: 16px;
   }
 
@@ -60,7 +60,7 @@ const grouped = {
   select {
     background: white;
     border: 1px solid var(--line);
-    border-radius: 6px;
+    border-radius: 4px;
     color: var(--text);
     min-height: 42px;
     padding: 8px;
@@ -68,6 +68,7 @@ const grouped = {
 
   .reset {
     align-self: center;
+    font-weight: 750;
   }
 
   @media (min-width: 860px) {
@@ -76,4 +77,3 @@ const grouped = {
     }
   }
 </style>
-

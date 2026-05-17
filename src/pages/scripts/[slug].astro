@@ -14,15 +14,25 @@ const { Content } = await render(script);
 ---
 
 <Layout title={script.data.title} description={script.data.description}>
-  <article class="section">
-    <div class="container prose">
+  <article>
+    <header class="page-intro">
+      <div class="container article-header">
       <p class="eyebrow">{script.data.context}</p>
       <h1>{script.data.title}</h1>
       <p class="lede">{script.data.description}</p>
-      <div class="button-row tags">
+        <div class="tag-row">
         {script.data.tags.map((tag) => <TagPill label={tag} />)}
       </div>
+      </div>
+    </header>
+    <div class="container article-layout">
+      <aside class="article-aside">
+        <a href="/scripts">All scripts</a>
+        <a href="/support-now">Support now</a>
+      </aside>
+      <div class="prose">
       <Content />
+    </div>
     </div>
   </article>
 </Layout>

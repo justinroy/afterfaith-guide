@@ -1,0 +1,82 @@
+---
+type Props = {
+  title: string;
+  description: string;
+  href: string;
+  category: string;
+  audience: string;
+  date: Date;
+  featured?: boolean;
+};
+
+const { title, description, href, category, audience, date, featured = false } = Astro.props;
+const displayDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(date);
+---
+
+<article class:list={['article-card', { featured }]}>
+  <p class="kicker">{category}</p>
+  <h2><a href={href}>{title}</a></h2>
+  <p>{description}</p>
+  <div class="article-meta">
+    <span>{audience}</span>
+    <span>{displayDate}</span>
+  </div>
+</article>
+
+<style>
+  .article-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    display: grid;
+    gap: 10px;
+    min-height: 100%;
+    padding: 18px;
+  }
+
+  .article-card.featured {
+    border-top: 4px solid var(--accent);
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: 1.12rem;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  h2 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  h2 a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+  }
+
+  p {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .article-meta {
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.84rem;
+    gap: 8px 14px;
+    margin-top: 4px;
+    padding-top: 10px;
+  }
+</style>

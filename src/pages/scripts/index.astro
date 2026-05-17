@@ -8,12 +8,20 @@ const routeId = (id: string) => id.replace(/\.md$/, '');
 ---
 
 <Layout title="Scripts">
-  <section class="section">
-    <div class="container prose">
+  <section class="page-intro">
+    <div class="container split-intro">
+      <div>
       <p class="eyebrow">Scripts</p>
-      <h1>Words for moments that can feel hard to enter.</h1>
-      <p class="lede">Use these as starting language. Edit them until they sound like you and fit your safety needs.</p>
+        <h1>Words for moments that can feel hard to enter.</h1>
+        <p class="lede">Use these as starting language. Edit them until they sound like you and fit your safety needs.</p>
+      </div>
+      <aside class="intro-panel">
+        <strong>Edit freely</strong>
+        <p>Keep what helps, soften what does not, and prioritize privacy or safety over perfect wording.</p>
+      </aside>
     </div>
+  </section>
+  <section class="section compact">
     <div class="container grid two">
       {scripts.map((script) => (
         <ScriptCard title={script.data.title} description={script.data.description} context={script.data.context} href={`/scripts/${routeId(script.id)}`} />

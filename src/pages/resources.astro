@@ -2,7 +2,7 @@
 import Layout from '../components/Layout.astro';
 import ResourceCard from '../components/ResourceCard.astro';
 import ResourceFilterControls from '../components/ResourceFilterControls.astro';
-import { getPublishedResources, getResourceFilterOptions, type ResourceFilters } from '../lib/resources';
+import { getPublishedResources, getResourceFilterOptions, type FilterOption, type Resource, type ResourceFilters, type ResourceTag } from '../lib/resources';
 import { env } from 'cloudflare:workers';
 
 const db = env.DB;
@@ -13,25 +13,80 @@ const filters: ResourceFilters = {
   type: Astro.url.searchParams.get('type') || undefined
 };
 
-const data = db ? await getPublishedResources(db, filters) : { resources: [], tags: [] };
-const filterOptions = db ? await getResourceFilterOptions(db) : [];
+let data: { resources: Resource[]; tags: ResourceTag[] } = { resources: [], tags: [] };
+let filterOptions: FilterOption[] = [];
+let resourcesAvailable = Boolean(db);
+if (db) {
+  try {
+    data = await getPublishedResources(db, filters);
+    filterOptions = await getResourceFilterOptions(db);
+  } catch {
+    resourcesAvailable = false;
+  }
+}
+const featured = data.resources.filter((resource) => resource.featured);
+const standard = data.resources.filter((resource) => !resource.featured);
+const hasFilters = Object.values(filters).some(Boolean);
 ---
 
 <Layout title="Resources">
-  <section class="section">
-    <div class="container prose">
-      <p class="eyebrow">Resources</p>
-      <h1>Find support without pressure.</h1>
-      <p class="lede">Browse organizations, directories, podcasts, and learning resources labeled for stance, intensity, cost, and fit.</p>
-    </div>
-    <div class="container">
-      {db ? <ResourceFilterControls options={filterOptions} filters={filters} /> : <p class="notice">Resources are temporarily unavailable. Please try again soon.</p>}
-      <div class="grid two">
-        {data.resources.map((resource) => (
-          <ResourceCard resource={resource} tags={data.tags.filter((tag) => tag.resource_id === resource.id)} />
-        ))}
+  <section class="page-intro">
+    <div class="container split-intro">
+      <div>
+        <p class="eyebrow">Resource directory</p>
+        <h1>Find support without pressure.</h1>
+        <p class="lede">Browse organizations, directories, podcasts, communities, and learning resources by situation, topic, tradition, and type.</p>
       </div>
-      {db && data.resources.length === 0 ? <p class="notice">No resources match those filters yet.</p> : null}
+      <aside class="intro-panel">
+        <strong>Before you click</strong>
+        <p>Check intensity, cost, stance, safety notes, and whether a resource fits your situation today.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="container">
+      {resourcesAvailable ? <ResourceFilterControls options={filterOptions} filters={filters} /> : <p class="notice">Resources are temporarily unavailable. Please try again soon.</p>}
+
+      {featured.length > 0 ? (
+        <div class="resource-group">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Featured</p>
+              <h2>Reviewed starting points</h2>
+            </div>
+          </div>
+          <div class="grid two">
+            {featured.map((resource) => (
+              <ResourceCard resource={resource} tags={data.tags.filter((tag) => tag.resource_id === resource.id)} />
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      <div class="resource-group">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">{hasFilters ? 'Matching resources' : 'Directory'}</p>
+            <h2>{data.resources.length} resource{data.resources.length === 1 ? '' : 's'}</h2>
+          </div>
+        </div>
+        <div class="grid two">
+          {(hasFilters ? data.resources : standard).map((resource) => (
+            <ResourceCard resource={resource} tags={data.tags.filter((tag) => tag.resource_id === resource.id)} />
+          ))}
+        </div>
+      </div>
+
+      {resourcesAvailable && data.resources.length === 0 ? <p class="notice">No resources match those filters yet. Try removing one filter or browse all resources.</p> : null}
     </div>
   </section>
 </Layout>
+
+<style>
+  .resource-group + .resource-group {
+    border-top: 1px solid var(--line);
+    margin-top: 28px;
+    padding-top: 28px;
+  }
+</style>

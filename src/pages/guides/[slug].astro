@@ -14,15 +14,25 @@ const { Content } = await render(guide);
 ---
 
 <Layout title={guide.data.title} description={guide.data.description}>
-  <article class="section">
-    <div class="container prose">
+  <article>
+    <header class="page-intro">
+      <div class="container article-header">
       <p class="eyebrow">{guide.data.stage}</p>
       <h1>{guide.data.title}</h1>
       <p class="lede">{guide.data.description}</p>
-      <div class="button-row tags">
+        <div class="tag-row">
         {guide.data.tags.map((tag) => <TagPill label={tag} />)}
       </div>
+      </div>
+    </header>
+    <div class="container article-layout">
+      <aside class="article-aside">
+        <a href="/guides">All guides</a>
+        <a href="/resources">Browse resources</a>
+      </aside>
+      <div class="prose">
       <Content />
+    </div>
     </div>
   </article>
 </Layout>

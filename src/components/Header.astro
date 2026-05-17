@@ -1,9 +1,10 @@
 ---
 const links = [
-  ['Start Here', '/start-here'],
   ['Resources', '/resources'],
+  ['Articles', '/articles'],
   ['Guides', '/guides'],
   ['Scripts', '/scripts'],
+  ['Start Here', '/start-here'],
   ['Support Now', '/support-now'],
   ['About', '/about']
 ];
@@ -11,8 +12,17 @@ const links = [
 
 <header class="site-header">
   <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <span>Calm, practical support after religion</span>
+      <a href="/suggest-a-resource">Suggest a resource</a>
+    </div>
+  </div>
   <div class="container header-inner">
-    <a class="brand" href="/">AfterFaith Guide</a>
+    <a class="brand" href="/">
+      <span class="brand-mark">AF</span>
+      <span>AfterFaith Guide</span>
+    </a>
     <nav aria-label="Main navigation">
       {links.map(([label, href]) => <a href={href}>{label}</a>)}
     </nav>
@@ -21,11 +31,32 @@ const links = [
 
 <style>
   .site-header {
-    background: rgba(247, 244, 237, 0.96);
+    background: rgba(255, 254, 250, 0.98);
     border-bottom: 1px solid var(--line);
     position: sticky;
     top: 0;
     z-index: 10;
+  }
+
+  .utility-bar {
+    background: var(--ink);
+    color: white;
+    font-size: 0.84rem;
+  }
+
+  .utility-inner {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    justify-content: space-between;
+    min-height: 34px;
+  }
+
+  .utility-inner a {
+    color: white;
+    font-weight: 750;
+    text-decoration: none;
   }
 
   .skip-link {
@@ -48,27 +79,46 @@ const links = [
     flex-wrap: wrap;
     gap: 14px 24px;
     justify-content: space-between;
-    min-height: 72px;
+    min-height: 70px;
     padding-block: 12px;
   }
 
   .brand {
+    align-items: center;
     color: var(--text);
+    display: inline-flex;
+    gap: 10px;
     font-weight: 800;
     text-decoration: none;
+  }
+
+  .brand-mark {
+    align-items: center;
+    background: var(--accent-dark);
+    border-radius: 4px;
+    color: white;
+    display: inline-flex;
+    font-size: 0.82rem;
+    height: 34px;
+    justify-content: center;
+    width: 34px;
   }
 
   nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px 16px;
+    gap: 8px 14px;
   }
 
   nav a {
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: 0.93rem;
     font-weight: 650;
     text-decoration: none;
   }
-</style>
 
+  nav a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
+  }
+</style>

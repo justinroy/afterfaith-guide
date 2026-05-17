@@ -3,22 +3,66 @@ import Layout from '../components/Layout.astro';
 ---
 
 <Layout title="About / Values">
-  <section class="section">
-    <div class="container prose">
-      <p class="eyebrow">About / Values</p>
-      <h1>A resource for autonomy, safety, and honest rebuilding.</h1>
-      <p class="lede">AfterFaith Guide exists for people whose relationship to religion has become complicated, painful, uncertain, or changed.</p>
-      <h2>Values</h2>
-      <ul>
-        <li>Endpoint-neutral support</li>
-        <li>No mockery or proselytizing</li>
-        <li>Privacy-aware design</li>
-        <li>Practical next steps over debate</li>
-        <li>Respect for grief, family complexity, and culture</li>
-      </ul>
-      <h2>What this is not</h2>
-      <p>This is not therapy, clergy counseling, a public debate forum, or a place to pressure people toward a single identity.</p>
+  <section class="page-intro">
+    <div class="container split-intro">
+      <div>
+        <p class="eyebrow">About / Values</p>
+        <h1>A resource library for autonomy, safety, and honest rebuilding.</h1>
+        <p class="lede">AfterFaith Guide exists for people whose relationship to religion has become complicated, painful, uncertain, or changed.</p>
+      </div>
+      <aside class="intro-panel">
+        <strong>Built with restraint</strong>
+        <p>No ads, payments, accounts, comments, forums, newsletter integration, or unnecessary tracking.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="container values-grid">
+      <div class="value-panel">
+        <h2>Values</h2>
+        <ul>
+          <li>Endpoint-neutral support</li>
+          <li>No mockery or proselytizing</li>
+          <li>Privacy-aware design</li>
+          <li>Practical next steps over debate</li>
+          <li>Respect for grief, family complexity, and culture</li>
+        </ul>
+      </div>
+      <div class="value-panel">
+        <h2>What this is not</h2>
+        <p>This is not therapy, clergy counseling, a public debate forum, or a place to pressure people toward a single identity.</p>
+        <p>Guides, scripts, and articles are reviewed Markdown content. Public resource records and resource suggestions remain in Cloudflare D1.</p>
+      </div>
     </div>
   </section>
 </Layout>
 
+<style>
+  .values-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .value-panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px;
+  }
+
+  .value-panel h2 {
+    margin-bottom: 10px;
+  }
+
+  .value-panel p,
+  .value-panel li {
+    color: var(--muted);
+  }
+
+  @media (min-width: 780px) {
+    .values-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+const articles = (await getCollection('articles')).sort(
+  (a, b) => b.data.published.valueOf() - a.data.published.valueOf()
+);
+const routeId = (id: string) => id.replace(/\.md$/, '');
+const selectedCategory = Astro.url.searchParams.get('category') || '';
+const selectedTag = Astro.url.searchParams.get('tag') || '';
+const categories = Array.from(new Set(articles.map((article) => article.data.category))).sort();
+const tags = Array.from(new Set(articles.flatMap((article) => article.data.tags))).sort();
+const filteredArticles = articles.filter((article) => {
+  const matchesCategory = selectedCategory ? article.data.category === selectedCategory : true;
+  const matchesTag = selectedTag ? article.data.tags.includes(selectedTag) : true;
+  return matchesCategory && matchesTag;
+});
+---
+
+<Layout title="Articles">
+  <section class="page-intro">
+    <div class="container split-intro">
+      <div>
+        <p class="eyebrow">Articles</p>
+        <h1>Plain-language notes for the questions that keep coming up.</h1>
+        <p class="lede">Team-editable Markdown articles for pacing, safety, resource selection, family pressure, and rebuilding after religion.</p>
+      </div>
+      <aside class="intro-panel">
+        <strong>Editorial promise</strong>
+        <p>Calm, practical, endpoint-neutral, and reviewed before publication.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section compact">
+    <div class="container library-layout">
+      <aside class="library-sidebar" aria-label="Article filters">
+        <h2>Browse</h2>
+        <a href="/articles" class={selectedCategory || selectedTag ? '' : 'active'}>All articles</a>
+        <h3>Categories</h3>
+        {categories.map((category) => (
+          <a class={selectedCategory === category ? 'active' : ''} href={`/articles?category=${encodeURIComponent(category)}`}>{category}</a>
+        ))}
+        <h3>Tags</h3>
+        {tags.map((tag) => (
+          <a class={selectedTag === tag ? 'active' : ''} href={`/articles?tag=${encodeURIComponent(tag)}`}>{tag}</a>
+        ))}
+      </aside>
+
+      <div>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Library</p>
+            <h2>{filteredArticles.length} article{filteredArticles.length === 1 ? '' : 's'}</h2>
+          </div>
+        </div>
+        <div class="content-list">
+          {filteredArticles.map((article) => (
+            <ArticleCard
+              title={article.data.title}
+              description={article.data.description}
+              category={article.data.category}
+              audience={article.data.audience}
+              date={article.data.published}
+              featured={article.data.featured}
+              href={`/articles/${routeId(article.id)}`}
+            />
+          ))}
+        </div>
+        {filteredArticles.length === 0 ? <p class="notice">No articles match that browse view yet.</p> : null}
+      </div>
+    </div>
+  </section>
+</Layout>

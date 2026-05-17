@@ -80,6 +80,31 @@ export async function getPublishedResources(db: D1Database, filters: ResourceFil
   };
 }
 
+export async function getFeaturedResources(db: D1Database, limit = 6) {
+  const resources = await db
+    .prepare(
+      `SELECT * FROM resources
+       WHERE status = 'published' AND featured = 1
+       ORDER BY last_reviewed DESC, title ASC
+       LIMIT ?`
+    )
+    .bind(limit)
+    .all<Resource>();
+
+  const tags = await db
+    .prepare(
+      `SELECT resource_id, tag_type, tag_slug, tag_label
+       FROM resource_tags
+       ORDER BY tag_type ASC, tag_label ASC`
+    )
+    .all<ResourceTag>();
+
+  return {
+    resources: resources.results ?? [],
+    tags: tags.results ?? []
+  };
+}
+
 export async function getResourceFilterOptions(db: D1Database) {
   const results = await db
     .prepare(
@@ -92,4 +117,3 @@ export async function getResourceFilterOptions(db: D1Database) {
 
   return results.results ?? [];
 }
-

@@ -19,6 +19,7 @@ It is intentionally non-monetized and privacy-aware. It does not include ads, pa
 
 - `src/content/guides/` - Markdown guide collection
 - `src/content/scripts/` - Markdown script collection
+- `src/content/articles/` - Markdown article collection for team-reviewed editorial notes
 - `src/pages/` - Astro pages and API routes
 - `src/components/` - Shared UI components
 - `migrations/` - D1 migrations
@@ -49,3 +50,6 @@ npm run build
 
 See `DEPLOYMENT.md` and `docs/CLOUDFLARE_RUNBOOK.md`.
 
+## Content Editing
+
+Articles, guides, and scripts are edited as Markdown in the repository. See `docs/CONTRIBUTING_CONTENT.md` for frontmatter, tone, and review expectations.

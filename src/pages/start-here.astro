@@ -4,19 +4,36 @@ import StageCard from '../components/StageCard.astro';
 ---
 
 <Layout title="Start Here">
-  <section class="section">
-    <div class="container prose">
-      <p class="eyebrow">Start Here</p>
-      <h1>Find the next step that feels safe enough.</h1>
-      <p class="lede">You do not have to name your entire future before taking care of the next hour, the next conversation, or the next boundary.</p>
+  <section class="page-intro">
+    <div class="container split-intro">
+      <div>
+        <p class="eyebrow">Start Here</p>
+        <h1>Find the next step that feels safe enough.</h1>
+        <p class="lede">You do not have to name your entire future before taking care of the next hour, the next conversation, or the next boundary.</p>
+      </div>
+      <aside class="intro-panel">
+        <strong>No forced endpoint</strong>
+        <p>This site supports uncertainty, leaving, grieving, rebuilding secularly, rebuilding spiritually, and moving slowly.</p>
+      </aside>
     </div>
   </section>
-  <section class="section">
-    <div class="container grid three">
-      <StageCard title="Keep it private for now" text="If disclosure could affect housing, money, school, work, custody, or safety, you can move slowly." href="/guides/how-to-tell-religious-parents-you-no-longer-believe" />
-      <StageCard title="Lower the intensity" text="If fear or grief is running high, choose grounding and support before debate or big decisions." href="/guides/fear-of-hell-after-leaving-religion" />
-      <StageCard title="Find one steady person" text="A therapist, peer line, friend, or community can make the process less isolating." href="/resources" />
+
+  <section class="section compact">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Choose a first path</p>
+          <h2>What feels most true today?</h2>
+        </div>
+      </div>
+      <div class="grid three">
+        <StageCard title="I need support now" text="Start with immediate steadiness, crisis boundaries, and the next safer action." href="/support-now" />
+        <StageCard title="I need a resource" text="Browse support organizations, therapist directories, podcasts, and learning tools." href="/resources" />
+        <StageCard title="I need words" text="Use editable scripts for family, partners, invitations, group chats, and therapy questions." href="/scripts" />
+        <StageCard title="I am scared of hell or punishment" text="Read a grounded guide for fear that remains after belief changes." href="/guides/fear-of-hell-after-leaving-religion" />
+        <StageCard title="I am worried about disclosure" text="Move slowly if housing, money, school, work, custody, or safety could be affected." href="/guides/how-to-tell-religious-parents-you-no-longer-believe" />
+        <StageCard title="I am rebuilding community" text="Explore grief, belonging, and finding steadier support after church was central." href="/guides/what-to-do-when-church-was-your-whole-community" />
+      </div>
     </div>
   </section>
 </Layout>
-
