@@ -27,7 +27,7 @@ function isValidUrl(value: string) {
 export const POST: APIRoute = async ({ request, redirect }) => {
   const db = env.DB;
   if (!db) {
-    return new Response('Resource suggestions are unavailable until D1 is configured.', { status: 503 });
+    return new Response('Resource suggestions are temporarily unavailable. Please try again soon.', { status: 503 });
   }
 
   const formData = await request.formData();
@@ -47,13 +47,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   if (isProduction) {
     if (!secret || !token) {
-      return new Response('Turnstile verification is required.', { status: 400 });
+      return new Response('Please complete the spam check and try again.', { status: 400 });
     }
 
     const remoteIp = request.headers.get('CF-Connecting-IP') ?? undefined;
     const ok = await verifyTurnstile(token, secret, remoteIp);
     if (!ok) {
-      return new Response('Turnstile verification failed.', { status: 400 });
+      return new Response('The spam check did not complete. Please try again.', { status: 400 });
     }
   }
 
