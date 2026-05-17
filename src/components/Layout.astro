@@ -1,0 +1,33 @@
+---
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import '../styles/global.css';
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const {
+  title = 'AfterFaith Guide',
+  description = 'A calm, practical guide for people navigating doubt, deconstruction, religious trauma, family tension, and life after faith.'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title === 'AfterFaith Guide' ? title : `${title} | AfterFaith Guide`}</title>
+  </head>
+  <body>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+

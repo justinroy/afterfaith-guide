@@ -1,0 +1,45 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <strong>AfterFaith Guide</strong>
+      <p>A calm, practical resource for people finding their next safe step.</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <a href="/suggest-a-resource">Suggest a Resource</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/about">About / Values</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    margin-top: 48px;
+    padding: 32px 0;
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: 20px;
+  }
+
+  p {
+    color: var(--muted);
+    margin: 6px 0 0;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  @media (min-width: 720px) {
+    .footer-grid {
+      align-items: start;
+      grid-template-columns: 1fr auto;
+    }
+  }
+</style>
+

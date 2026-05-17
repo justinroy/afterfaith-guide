@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "afterfaith-guide",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "workers_dev": true,
+  "compatibility_date": "2026-05-17",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.1
+  },
+  "routes": [
+    {
+      "pattern": "afterfaithguide.org",
+      "custom_domain": true
+    },
+    {
+      "pattern": "afterfaithguide.com",
+      "custom_domain": true
+    }
+  ],
+  "vars": {
+    "PUBLIC_TURNSTILE_SITE_KEY": ""
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "afterfaith-guide",
+      "database_id": "f140b2bc-fdac-4eed-84f0-9a0e57038ad2",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

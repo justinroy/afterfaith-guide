@@ -1,0 +1,74 @@
+---
+const links = [
+  ['Start Here', '/start-here'],
+  ['Resources', '/resources'],
+  ['Guides', '/guides'],
+  ['Scripts', '/scripts'],
+  ['Support Now', '/support-now'],
+  ['About', '/about']
+];
+---
+
+<header class="site-header">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="container header-inner">
+    <a class="brand" href="/">AfterFaith Guide</a>
+    <nav aria-label="Main navigation">
+      {links.map(([label, href]) => <a href={href}>{label}</a>)}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: rgba(247, 244, 237, 0.96);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .skip-link {
+    left: 12px;
+    position: absolute;
+    top: -60px;
+  }
+
+  .skip-link:focus {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px;
+    top: 12px;
+  }
+
+  .header-inner {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+    justify-content: space-between;
+    min-height: 72px;
+    padding-block: 12px;
+  }
+
+  .brand {
+    color: var(--text);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+
+  nav a {
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 650;
+    text-decoration: none;
+  }
+</style>
+

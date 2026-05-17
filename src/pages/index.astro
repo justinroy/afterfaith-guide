@@ -1,0 +1,43 @@
+---
+import Layout from '../components/Layout.astro';
+import StageCard from '../components/StageCard.astro';
+---
+
+<Layout title="AfterFaith Guide">
+  <section class="hero">
+    <div class="container prose">
+      <p class="eyebrow">Calm, practical, endpoint-neutral</p>
+      <h1>Questioning or leaving religion? Start here.</h1>
+      <p class="lede">A calm, practical guide for people navigating doubt, deconstruction, religious trauma, family tension, and life after faith.</p>
+      <div class="button-row">
+        <a class="button" href="/start-here">Find my starting point</a>
+        <a class="button secondary" href="/resources">Browse resources</a>
+        <a class="button secondary" href="/support-now">Get support now</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Where you might be</p>
+      <div class="grid three">
+        <StageCard title="I am questioning" text="You do not need to decide everything today. Start with stability, privacy, and honest questions." href="/start-here" />
+        <StageCard title="I am leaving or grieving" text="Find language for fear, anger, family pressure, community loss, and the first months of change." href="/guides" />
+        <StageCard title="I need support now" text="Find immediate support options and reminders about crisis, therapy, and safety boundaries." href="/support-now" />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    background:
+      linear-gradient(120deg, rgba(247, 244, 237, 0.92), rgba(247, 244, 237, 0.72)),
+      url('/hero-path.png');
+    background-position: center;
+    background-size: cover;
+    border-bottom: 1px solid var(--line);
+    min-height: 68vh;
+    padding: clamp(72px, 14vw, 150px) 0 80px;
+  }
+</style>
