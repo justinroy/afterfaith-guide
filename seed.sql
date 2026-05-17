@@ -1,3 +1,6 @@
+DELETE FROM resource_tags;
+DELETE FROM resources;
+
 INSERT INTO resources (id, title, url, type, stance, emotional_intensity, cost, region, best_for, not_best_for, safety_notes, last_reviewed, featured, status)
 VALUES
   (1, 'Recovering from Religion', 'https://www.recoveringfromreligion.org/', 'support organization', 'secular, endpoint-neutral support', 'medium', 'free', 'International', 'People who want peer support while questioning, leaving, or recovering from religion.', 'People seeking clergy counseling or conversion-focused support.', 'Peer support is not therapy or crisis care.', '2026-05-17', 1, 'published'),
@@ -48,4 +51,3 @@ VALUES
   (14, 'stage', 'leaving', 'Leaving'),
   (15, 'tradition', 'muslim', 'Muslim'),
   (15, 'topic', 'safety', 'Safety');
-
