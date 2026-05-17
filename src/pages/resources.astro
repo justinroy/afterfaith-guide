@@ -1,0 +1,37 @@
+---
+import Layout from '../components/Layout.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import ResourceFilterControls from '../components/ResourceFilterControls.astro';
+import { getPublishedResources, getResourceFilterOptions, type ResourceFilters } from '../lib/resources';
+import { env } from 'cloudflare:workers';
+
+const db = env.DB;
+const filters: ResourceFilters = {
+  stage: Astro.url.searchParams.get('stage') || undefined,
+  topic: Astro.url.searchParams.get('topic') || undefined,
+  tradition: Astro.url.searchParams.get('tradition') || undefined,
+  type: Astro.url.searchParams.get('type') || undefined
+};
+
+const data = db ? await getPublishedResources(db, filters) : { resources: [], tags: [] };
+const filterOptions = db ? await getResourceFilterOptions(db) : [];
+---
+
+<Layout title="Resources">
+  <section class="section">
+    <div class="container prose">
+      <p class="eyebrow">Resources</p>
+      <h1>Find support without pressure.</h1>
+      <p class="lede">These records come from D1 and are labeled for stance, intensity, cost, and fit.</p>
+    </div>
+    <div class="container">
+      {db ? <ResourceFilterControls options={filterOptions} filters={filters} /> : <p class="notice">D1 is not available in this environment yet. Apply migrations and bind `DB` to show resources.</p>}
+      <div class="grid two">
+        {data.resources.map((resource) => (
+          <ResourceCard resource={resource} tags={data.tags.filter((tag) => tag.resource_id === resource.id)} />
+        ))}
+      </div>
+      {db && data.resources.length === 0 ? <p class="notice">No resources match those filters yet.</p> : null}
+    </div>
+  </section>
+</Layout>

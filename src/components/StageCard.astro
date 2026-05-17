@@ -1,0 +1,43 @@
+---
+type Props = {
+  title: string;
+  text: string;
+  href: string;
+};
+
+const { title, text, href } = Astro.props;
+---
+
+<a class="stage-card" href={href}>
+  <h3>{title}</h3>
+  <p>{text}</p>
+</a>
+
+<style>
+  .stage-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--text);
+    display: block;
+    min-height: 178px;
+    padding: 20px;
+    text-decoration: none;
+  }
+
+  .stage-card:hover {
+    border-color: var(--accent);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    line-height: 1.25;
+    margin: 0 0 10px;
+  }
+
+  p {
+    color: var(--muted);
+    margin: 0;
+  }
+</style>
+

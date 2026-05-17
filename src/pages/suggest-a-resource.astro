@@ -1,0 +1,87 @@
+---
+import Layout from '../components/Layout.astro';
+import { env } from 'cloudflare:workers';
+
+const siteKey = env.PUBLIC_TURNSTILE_SITE_KEY || import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<Layout title="Suggest a Resource">
+  <section class="section">
+    <div class="container prose">
+      <p class="eyebrow">Suggest a Resource</p>
+      <h1>Suggest something useful and safe.</h1>
+      <p class="lede">Suggestions are private review submissions, not public comments. Email is optional.</p>
+    </div>
+    <div class="container">
+      <form class="suggest-form" method="post" action="/api/suggest-resource">
+        <label>
+          <span>Resource title</span>
+          <input required name="title" maxlength="180" autocomplete="off" />
+        </label>
+        <label>
+          <span>Resource URL</span>
+          <input required name="url" type="url" maxlength="500" autocomplete="off" />
+        </label>
+        <label>
+          <span>Resource type</span>
+          <select required name="resource_type">
+            <option value="">Choose one</option>
+            <option>support organization</option>
+            <option>therapist directory</option>
+            <option>education</option>
+            <option>podcast</option>
+            <option>book</option>
+            <option>community</option>
+            <option>other</option>
+          </select>
+        </label>
+        <label>
+          <span>Email, optional</span>
+          <input name="suggested_by_email" type="email" maxlength="254" autocomplete="email" />
+        </label>
+        <label>
+          <span>Notes, optional</span>
+          <textarea name="notes" rows="5" maxlength="1600"></textarea>
+        </label>
+        {siteKey ? <div class="cf-turnstile" data-sitekey={siteKey}></div> : <p class="notice">Turnstile is not configured in this environment. Local development fallback is enabled.</p>}
+        <button class="button" type="submit">Submit suggestion</button>
+      </form>
+    </div>
+  </section>
+  {siteKey ? <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> : null}
+</Layout>
+
+<style>
+  .suggest-form {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: grid;
+    gap: 16px;
+    max-width: 720px;
+    padding: 20px;
+  }
+
+  label {
+    display: grid;
+    gap: 6px;
+  }
+
+  span {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  input,
+  select,
+  textarea {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: var(--text);
+    font: inherit;
+    padding: 10px;
+    width: 100%;
+  }
+</style>

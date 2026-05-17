@@ -1,0 +1,51 @@
+---
+type Props = {
+  title: string;
+  description: string;
+  href: string;
+  context: string;
+};
+
+const { title, description, href, context } = Astro.props;
+---
+
+<article class="script-card">
+  <p class="meta">{context}</p>
+  <h2><a href={href}>{title}</a></h2>
+  <p>{description}</p>
+</article>
+
+<style>
+  .script-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .meta {
+    color: var(--sage);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin: 0 0 10px;
+  }
+
+  h2 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  p:last-child {
+    color: var(--muted);
+    margin: 0;
+  }
+</style>
+

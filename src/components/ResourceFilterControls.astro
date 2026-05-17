@@ -1,0 +1,79 @@
+---
+import type { FilterOption, ResourceFilters } from '../lib/resources';
+
+type Props = {
+  options: FilterOption[];
+  filters: ResourceFilters;
+};
+
+const { options, filters } = Astro.props;
+const grouped = {
+  stage: options.filter((option) => option.type === 'stage'),
+  topic: options.filter((option) => option.type === 'topic'),
+  tradition: options.filter((option) => option.type === 'tradition'),
+  type: options.filter((option) => option.type === 'type')
+};
+---
+
+<form class="filters" method="get">
+  {Object.entries(grouped).map(([name, values]) => (
+    <label>
+      <span>{name}</span>
+      <select name={name}>
+        <option value="">Any</option>
+        {values.map((option) => (
+          <option value={option.slug} selected={filters[name as keyof ResourceFilters] === option.slug}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  ))}
+  <button class="button" type="submit">Apply filters</button>
+  <a class="reset" href="/resources">Reset</a>
+</form>
+
+<style>
+  .filters {
+    align-items: end;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: grid;
+    gap: 14px;
+    margin: 28px 0;
+    padding: 16px;
+  }
+
+  label {
+    display: grid;
+    gap: 6px;
+  }
+
+  span {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  select {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: var(--text);
+    min-height: 42px;
+    padding: 8px;
+  }
+
+  .reset {
+    align-self: center;
+  }
+
+  @media (min-width: 860px) {
+    .filters {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) auto auto;
+    }
+  }
+</style>
+

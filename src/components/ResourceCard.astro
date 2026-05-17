@@ -1,0 +1,112 @@
+---
+import TagPill from './TagPill.astro';
+import type { Resource, ResourceTag } from '../lib/resources';
+
+type Props = {
+  resource: Resource;
+  tags: ResourceTag[];
+};
+
+const { resource, tags } = Astro.props;
+---
+
+<article class="resource-card">
+  <div class="resource-head">
+    <div>
+      <p class="type">{resource.type}</p>
+      <h2><a href={resource.url} rel="noreferrer" target="_blank">{resource.title}</a></h2>
+    </div>
+    {resource.featured ? <span class="featured">Featured</span> : null}
+  </div>
+  <p>{resource.best_for}</p>
+  <dl>
+    <div><dt>Intensity</dt><dd>{resource.emotional_intensity}</dd></div>
+    <div><dt>Cost</dt><dd>{resource.cost}</dd></div>
+    <div><dt>Reviewed</dt><dd>{resource.last_reviewed}</dd></div>
+  </dl>
+  {resource.safety_notes ? <p class="safety">{resource.safety_notes}</p> : null}
+  <div class="tags">
+    {tags.map((tag) => <TagPill label={tag.tag_label} />)}
+  </div>
+</article>
+
+<style>
+  .resource-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .resource-head {
+    align-items: start;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .type {
+    color: var(--sage);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0 0 6px;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  h2 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  p {
+    color: var(--muted);
+  }
+
+  .featured {
+    background: #e8f0e1;
+    border: 1px solid #c9d9bd;
+    border-radius: 999px;
+    color: #415032;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+
+  dl {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    margin: 18px 0;
+  }
+
+  dt {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  .safety {
+    border-left: 3px solid var(--rose);
+    padding-left: 12px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+

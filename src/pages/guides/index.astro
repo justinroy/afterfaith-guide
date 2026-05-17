@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import GuideCard from '../../components/GuideCard.astro';
+
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+const routeId = (id: string) => id.replace(/\.md$/, '');
+---
+
+<Layout title="Guides">
+  <section class="section">
+    <div class="container prose">
+      <p class="eyebrow">Guides</p>
+      <h1>Practical help for complicated moments.</h1>
+      <p class="lede">Guides are Markdown-backed for the MVP so they stay easy to review and improve.</p>
+    </div>
+    <div class="container grid two">
+      {guides.map((guide) => (
+        <GuideCard title={guide.data.title} description={guide.data.description} stage={guide.data.stage} href={`/guides/${routeId(guide.id)}`} />
+      ))}
+    </div>
+  </section>
+</Layout>

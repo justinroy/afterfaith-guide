@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import TagPill from '../../components/TagPill.astro';
+
+const guides = await getCollection('guides');
+const guide = guides.find((entry) => entry.id.replace(/\.md$/, '') === Astro.params.slug);
+
+if (!guide) {
+  return Astro.redirect('/guides', 302);
+}
+
+const { Content } = await render(guide);
+---
+
+<Layout title={guide.data.title} description={guide.data.description}>
+  <article class="section">
+    <div class="container prose">
+      <p class="eyebrow">{guide.data.stage}</p>
+      <h1>{guide.data.title}</h1>
+      <p class="lede">{guide.data.description}</p>
+      <div class="button-row tags">
+        {guide.data.tags.map((tag) => <TagPill label={tag} />)}
+      </div>
+      <Content />
+    </div>
+  </article>
+</Layout>

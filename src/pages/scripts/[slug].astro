@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import TagPill from '../../components/TagPill.astro';
+
+const scripts = await getCollection('scripts');
+const script = scripts.find((entry) => entry.id.replace(/\.md$/, '') === Astro.params.slug);
+
+if (!script) {
+  return Astro.redirect('/scripts', 302);
+}
+
+const { Content } = await render(script);
+---
+
+<Layout title={script.data.title} description={script.data.description}>
+  <article class="section">
+    <div class="container prose">
+      <p class="eyebrow">{script.data.context}</p>
+      <h1>{script.data.title}</h1>
+      <p class="lede">{script.data.description}</p>
+      <div class="button-row tags">
+        {script.data.tags.map((tag) => <TagPill label={tag} />)}
+      </div>
+      <Content />
+    </div>
+  </article>
+</Layout>
