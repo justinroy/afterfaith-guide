@@ -1,234 +1,95 @@
 ---
-import { getCollection } from 'astro:content';
-import { env } from 'cloudflare:workers';
 import Layout from '../components/Layout.astro';
-import StageCard from '../components/StageCard.astro';
-import ResourceCard from '../components/ResourceCard.astro';
-import ArticleCard from '../components/ArticleCard.astro';
-import GuideCard from '../components/GuideCard.astro';
-import { getFeaturedResources, type Resource, type ResourceTag } from '../lib/resources';
-
-const db = env.DB;
-let featuredResources: { resources: Resource[]; tags: ResourceTag[] } = { resources: [], tags: [] };
-if (db) {
-  try {
-    featuredResources = await getFeaturedResources(db, 4);
-  } catch {
-    featuredResources = { resources: [], tags: [] };
-  }
-}
-const articles = (await getCollection('articles'))
-  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
-const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
-const routeId = (id: string) => id.replace(/\.md$/, '');
-const featuredArticles = articles.filter((article) => article.data.featured).slice(0, 2);
-const latestArticles = articles.slice(0, 3);
 ---
 
-<Layout title="AfterFaith Guide">
-  <section class="home-hero">
-    <div class="container hero-grid">
-      <div>
-        <p class="eyebrow">Resource library for life after religion</p>
-        <h1>Find steady help without being pushed toward one ending.</h1>
-        <p class="lede">Browse practical resources, articles, guides, and scripts for questioning, leaving, grieving, family pressure, religious trauma, and rebuilding.</p>
-        <form class="quick-search" method="get" action="/resources" role="search">
-          <label>
-            <span>What kind of help do you need?</span>
-            <select name="topic">
-              <option value="">Browse all resources</option>
-              <option value="therapy">Therapy</option>
-              <option value="peer-support">Peer support</option>
-              <option value="religious-trauma">Religious trauma</option>
-              <option value="high-control">High-control groups</option>
-              <option value="safety">Safety</option>
-            </select>
-          </label>
-          <button class="button" type="submit">Search resources</button>
-        </form>
+<Layout
+  title="Coming Soon"
+  description="AfterFaith Guide is preparing a calm, practical resource library for people questioning, leaving, grieving, or rebuilding after religion."
+>
+  <section class="coming-soon">
+    <div class="container coming-soon-inner">
+      <div class="message">
+        <p class="eyebrow">AfterFaith Guide</p>
+        <h1>A calmer resource library is coming soon.</h1>
+        <p class="lede">
+          We are preparing practical, endpoint-neutral support for people questioning, leaving,
+          grieving, or rebuilding after religion.
+        </p>
+        <p>
+          The full guide is being shaped with care. For now, this page is a quiet placeholder while
+          the library is reviewed and organized.
+        </p>
+        <div class="button-row" aria-label="Helpful places to begin">
+          <a class="button" href="/support-now">I need support now</a>
+          <a class="button secondary" href="/about">About the project</a>
+        </div>
       </div>
-      <aside class="hero-directory">
-        <h2>Start by situation</h2>
-        <a href="/resources?stage=support-now">I need support now</a>
-        <a href="/resources?stage=questioning">I am questioning</a>
-        <a href="/resources?stage=leaving">I am leaving</a>
-        <a href="/resources?stage=healing">I am healing from religious trauma</a>
-        <a href="/resources?stage=rebuilding">I am rebuilding</a>
+
+      <aside class="note" aria-label="Project values">
+        <h2>Built to stay steady</h2>
+        <ul>
+          <li>No pressure toward one ending</li>
+          <li>No ads, accounts, or unnecessary tracking</li>
+          <li>Plain language for difficult moments</li>
+        </ul>
       </aside>
-    </div>
-  </section>
-
-  <section class="section compact">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Featured resources</p>
-          <h2>Reviewed places to begin</h2>
-          <p>Use the labels for stance, intensity, cost, and fit before opening something new.</p>
-        </div>
-        <a href="/resources">Browse the full directory</a>
-      </div>
-      {featuredResources.resources.length > 0 ? (
-        <div class="grid two">
-          {featuredResources.resources.map((resource) => (
-            <ResourceCard resource={resource} tags={featuredResources.tags.filter((tag) => tag.resource_id === resource.id)} />
-          ))}
-        </div>
-      ) : (
-        <p class="notice">Featured resources appear here when the D1 resource directory is available.</p>
-      )}
-    </div>
-  </section>
-
-  <section class="section muted-band">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Ways in</p>
-          <h2>Choose the door that matches today</h2>
-        </div>
-      </div>
-      <div class="grid four">
-        <StageCard title="Slow down the first hour" text="Support-now reminders for safety, grounding, and urgent moments." href="/support-now" />
-        <StageCard title="Understand what changed" text="Guides for doubt, fear, grief, family pressure, and identity shifts." href="/guides" />
-        <StageCard title="Find words for hard talks" text="Scripts you can edit for boundaries, invitations, partners, parents, and therapists." href="/scripts" />
-        <StageCard title="Compare support options" text="Articles about choosing resources without overwhelm or pressure." href="/articles" />
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container editorial-grid">
-      <div>
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Featured articles</p>
-            <h2>Editorial notes</h2>
-          </div>
-          <a href="/articles">All articles</a>
-        </div>
-        <div class="content-list">
-          {(featuredArticles.length ? featuredArticles : latestArticles).map((article) => (
-            <ArticleCard
-              title={article.data.title}
-              description={article.data.description}
-              category={article.data.category}
-              audience={article.data.audience}
-              date={article.data.published}
-              featured={article.data.featured}
-              href={`/articles/${routeId(article.id)}`}
-            />
-          ))}
-        </div>
-      </div>
-      <div>
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Core guides</p>
-            <h2>Practical help</h2>
-          </div>
-          <a href="/guides">All guides</a>
-        </div>
-        <div class="content-list">
-          {guides.map((guide) => (
-            <GuideCard title={guide.data.title} description={guide.data.description} stage={guide.data.stage} href={`/guides/${routeId(guide.id)}`} />
-          ))}
-        </div>
-      </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  .home-hero {
-    background: var(--surface-strong);
+  .coming-soon {
+    align-items: center;
+    background:
+      linear-gradient(135deg, rgba(47, 111, 115, 0.1), transparent 42%),
+      var(--surface-strong);
     border-bottom: 1px solid var(--line);
-    padding: clamp(36px, 8vw, 78px) 0;
+    display: flex;
+    min-height: calc(100vh - 210px);
+    padding: clamp(42px, 8vw, 92px) 0;
   }
 
-  .hero-grid {
-    align-items: stretch;
-    display: grid;
-    gap: 22px;
-  }
-
-  .quick-search {
-    align-items: end;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    display: grid;
-    gap: 12px;
-    margin-top: 24px;
-    max-width: 760px;
-    padding: 16px;
-  }
-
-  .quick-search label {
-    display: grid;
-    gap: 6px;
-  }
-
-  .quick-search span {
-    color: var(--muted);
-    font-size: 0.78rem;
-    font-weight: 850;
-    text-transform: uppercase;
-  }
-
-  .quick-search select {
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    color: var(--text);
-    font: inherit;
-    min-height: 42px;
-    padding: 8px;
-  }
-
-  .hero-directory {
-    background: var(--ink);
-    border-radius: 6px;
-    color: white;
-    display: grid;
-    gap: 8px;
-    padding: 20px;
-  }
-
-  .hero-directory h2 {
-    color: white;
-    font-size: 1.12rem;
-    margin-bottom: 4px;
-  }
-
-  .hero-directory a {
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
-    color: white;
-    font-weight: 750;
-    padding-top: 9px;
-    text-decoration: none;
-  }
-
-  .muted-band {
-    background: var(--surface-muted);
-    border-block: 1px solid var(--line);
-  }
-
-  .editorial-grid {
+  .coming-soon-inner {
+    align-items: center;
     display: grid;
     gap: 28px;
   }
 
+  .message {
+    max-width: 760px;
+  }
+
+  .message > p:not(.eyebrow, .lede) {
+    color: var(--muted);
+    font-size: 1.02rem;
+    margin: 16px 0 0;
+    max-width: 650px;
+  }
+
+  .note {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 20px;
+  }
+
+  .note h2 {
+    font-size: 1.18rem;
+  }
+
+  .note ul {
+    color: var(--muted);
+    margin: 14px 0 0;
+    padding-left: 20px;
+  }
+
+  .note li + li {
+    margin-top: 8px;
+  }
+
   @media (min-width: 860px) {
-    .hero-grid {
+    .coming-soon-inner {
       grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
-    }
-
-    .quick-search {
-      grid-template-columns: minmax(0, 1fr) auto;
-    }
-
-    .editorial-grid {
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     }
   }
 </style>
